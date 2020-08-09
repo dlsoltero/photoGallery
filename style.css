@@ -1,0 +1,118 @@
+* {
+    box-sizing:border-box
+}
+
+.gallery-wrapper {
+    font-family: helvetica, arial, sans-serif;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+}
+
+.thumbnails-wrapper {
+    -webkit-column-count: 5;
+    -webkit-column-gap: 3px;
+    -moz-column-count: 5;
+    -moz-column-gap: 3px;
+    column-count: 5;
+    column-gap: 3px;
+    line-height: 0;
+}
+
+.thumbnails-wrapper img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    padding-bottom: 3px;
+}
+
+.slideshow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+}
+
+.slideContainer {
+    line-height: 0;
+}
+
+.slideContainer img {
+    cursor: -moz-zoom-in;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.slideHeader {
+    position: fixed;
+    top: 0;
+    padding: 8px;
+    width: 100%;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 18px;
+
+    display: flex;
+  justify-content: space-between;
+}
+
+.slideNumber {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.closeButton {
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.prevSlide, .nextSlide {
+    position: fixed;
+    top: 50%;
+    margin-top: -22px;
+    width: auto;
+    padding: 16px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.prevSlide:hover, .nextSlide:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prevSlide {
+    left: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.nextSlide {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
