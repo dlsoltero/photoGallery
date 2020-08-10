@@ -1,4 +1,4 @@
-let totalSlides = 15; // Adjust to total number of images on gallery
+let totalSlides = 13; // Adjust to total number of images on gallery
 
 let currentSlideIndex = totalSlides;
 let slidesArray = {};
@@ -81,7 +81,7 @@ function showSlides() {
 
     slideNumber.textContent = currentSlideIndex + '/' + slideArrayLength;
 
-    slideImage.src = 'images/original/' + currentSlideIndex + '.jpg';
+    slideImage.src = 'images/' + currentSlideIndex + '.jpg';
 
     document.body.style.overflow = 'hidden';
 
