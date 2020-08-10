@@ -74,6 +74,8 @@ for (let i = 1; i <= totalSlides; i++) {
 }
 
 function showSlides() {
+    imageToDefault();
+
     let slideArrayLength = Object.keys(slidesArray).length;
 
     if (currentSlideIndex > slideArrayLength) {currentSlideIndex = 1}
@@ -89,7 +91,6 @@ function showSlides() {
 }
 
 function plusSlides(n) {
-    imageToDefault();
     currentSlideIndex += n;
     showSlides();
 }
@@ -116,28 +117,6 @@ closeButton.onclick = function() {
     exitSlideShow();
 }
 
-function imageToDefault() {
-    slideImage.style.cursor = '-moz-zoom-in';
-
-    slideImageContainer.style.position = 'static';
-    slideImageContainer.style.top = 'auto';
-    slideImageContainer.style.left = 'auto';
-    slideImageContainer.style.transform = 'none';
-
-    slideImageContainer.style.maxWidth = 'none';
-    slideImageContainer.style.maxHeight = 'none';
-    slideImageContainer.style.overflow = 'visible';
-
-
-    slideImage.style.position = 'absolute';
-    slideImage.style.top = '50%';
-    slideImage.style.left = '50%';
-    slideImage.style.transform = 'translate(-50%, -50%)';
-
-    slideImage.style.maxWidth = '100%';
-    slideImage.style.maxHeight = '100%';
-}
-
 document.addEventListener('keydown', (event) => {
     let isFocused = (document.activeElement === slideshow);
     const keyName = event.key;
@@ -153,11 +132,18 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+
 let isFullSize = false;
 let isDragScroll = false;
 
+// Drag scroll
+let isDown = false;
+let startY;
+let startX;
+let scrollTop;
+let scrollLeft;
+
 slideImage.onclick = function() {
-    console.log(isDragScroll);
     if (isDragScroll) {
         isDragScroll = false;
         return;
@@ -186,35 +172,23 @@ slideImage.onclick = function() {
         isFullSize = true;
     } else {
         imageToDefault();
-        isFullSize = false;
     }
 }
 
-// Drag scroll
-let isDown = false;
-let startY;
-let startX;
-let scrollTop;
-let scrollLeft;
-
 slideImage.addEventListener('mousedown', (e) => {
     isDown = true;
-    //slideImage.classList.add('active');
     startY = e.pageY - slideImage.offsetTop;
     startX = e.pageX - slideImage.offsetLeft;
     scrollTop = slideImageContainer.scrollTop;
     scrollLeft = slideImageContainer.scrollLeft;
-    //console.log(startY + ' ' + startX +  ' ' + scrollTop + ' ' + scrollLeft);
 });
 
 slideImage.addEventListener('mouseleave', () => {
     isDown = false;
-    //slideImage.classList.remove('active');
 });
 
 slideImage.addEventListener('mouseup', () => {
     isDown = false;
-    //slideImage.classList.remove('active');
 });
 
 slideImage.addEventListener('mousemove', (e) => {
@@ -228,3 +202,26 @@ slideImage.addEventListener('mousemove', (e) => {
     slideImageContainer.scrollTop = scrollTop - walkY;
     slideImageContainer.scrollLeft = scrollLeft - walkX;
 });
+
+function imageToDefault() {
+    slideImage.style.cursor = '-moz-zoom-in';
+
+    slideImageContainer.style.position = 'static';
+    slideImageContainer.style.top = 'auto';
+    slideImageContainer.style.left = 'auto';
+    slideImageContainer.style.transform = 'none';
+
+    slideImageContainer.style.maxWidth = 'none';
+    slideImageContainer.style.maxHeight = 'none';
+    slideImageContainer.style.overflow = 'visible';
+
+    slideImage.style.position = 'absolute';
+    slideImage.style.top = '50%';
+    slideImage.style.left = '50%';
+    slideImage.style.transform = 'translate(-50%, -50%)';
+
+    slideImage.style.maxWidth = '100%';
+    slideImage.style.maxHeight = '100%';
+
+    isFullSize = false;
+}
