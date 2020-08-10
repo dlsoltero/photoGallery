@@ -138,10 +138,33 @@ function imageToDefault() {
     slideImage.style.maxHeight = '100%';
 }
 
+document.addEventListener('keydown', (event) => {
+    let isFocused = (document.activeElement === slideshow);
+    const keyName = event.key;
+
+    if (slideshow.style.display != "none") {
+        if (keyName === 'ArrowRight') {
+            plusSlides(1);
+        }else if (keyName === 'ArrowLeft') {
+            plusSlides(-1);
+        }else if (keyName === 'Escape') {
+            exitSlideShow();
+        }
+    }
+});
+
 let isFullSize = false;
+let isDragScroll = false;
+
 slideImage.onclick = function() {
+    console.log(isDragScroll);
+    if (isDragScroll) {
+        isDragScroll = false;
+        return;
+    }
+
     if (isFullSize === false) {
-        slideImage.style.cursor = '-moz-zoom-out'; //'all-scroll';
+        slideImage.style.cursor = 'all-scroll'; // '-moz-zoom-out';
 
         slideImageContainer.style.position = 'absolute';
         slideImageContainer.style.top = '50%';
@@ -160,27 +183,48 @@ slideImage.onclick = function() {
         slideImage.style.maxWidth = 'none';
         slideImage.style.maxHeight = 'none';
 
-
         isFullSize = true;
     } else {
         imageToDefault();
-
         isFullSize = false;
     }
 }
 
+// Drag scroll
+let isDown = false;
+let startY;
+let startX;
+let scrollTop;
+let scrollLeft;
 
-document.addEventListener('keydown', (event) => {
-    let isFocused = (document.activeElement === slideshow);
-    const keyName = event.key;
+slideImage.addEventListener('mousedown', (e) => {
+    isDown = true;
+    //slideImage.classList.add('active');
+    startY = e.pageY - slideImage.offsetTop;
+    startX = e.pageX - slideImage.offsetLeft;
+    scrollTop = slideImageContainer.scrollTop;
+    scrollLeft = slideImageContainer.scrollLeft;
+    //console.log(startY + ' ' + startX +  ' ' + scrollTop + ' ' + scrollLeft);
+});
 
-    if (slideshow.style.display != "none") {
-        if (keyName === 'ArrowRight') {
-            plusSlides(1);
-        }else if (keyName === 'ArrowLeft') {
-            plusSlides(-1);
-        }else if (keyName === 'Escape') {
-            exitSlideShow();
-        }
-    }
+slideImage.addEventListener('mouseleave', () => {
+    isDown = false;
+    //slideImage.classList.remove('active');
+});
+
+slideImage.addEventListener('mouseup', () => {
+    isDown = false;
+    //slideImage.classList.remove('active');
+});
+
+slideImage.addEventListener('mousemove', (e) => {
+    if(!isDown) return;
+    e.preventDefault();
+    isDragScroll = true;
+    const y = e.pageY - slideImage.offsetTop;
+    const x = e.pageX - slideImage.offsetLeft;
+    const walkY = (y - startY) * 3;
+    const walkX = (x - startX) * 3;
+    slideImageContainer.scrollTop = scrollTop - walkY;
+    slideImageContainer.scrollLeft = scrollLeft - walkX;
 });
