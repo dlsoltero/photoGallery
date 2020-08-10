@@ -89,6 +89,7 @@ function showSlides() {
 }
 
 function plusSlides(n) {
+    imageToDefault();
     currentSlideIndex += n;
     showSlides();
 }
@@ -174,10 +175,6 @@ document.addEventListener('keydown', (event) => {
     const keyName = event.key;
 
     if (slideshow.style.display != "none") {
-        if (keyName === 'ArrowRight' || keyName === 'ArrowLeft') {
-            imageToDefault();
-        }
-
         if (keyName === 'ArrowRight') {
             plusSlides(1);
         }else if (keyName === 'ArrowLeft') {
